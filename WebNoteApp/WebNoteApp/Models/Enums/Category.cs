@@ -4,8 +4,8 @@
     {
         All,
         Personal,
-        Familia,
-        Health,
+        Work,
+        Education,
         Other
     }
 }

@@ -11,10 +11,10 @@ namespace WebNoteApp.Models
 
         public string Description { get; set; }
 
-        public Category category { get; set; }
+        public string category { get; set; }
 
-        public DateTime Created { get; set; }
+        public string Created { get; set; }
 
-        public DateTime Modified { get; set; }
+        public string Modified { get; set; }
     }
 }
