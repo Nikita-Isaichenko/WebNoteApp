@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebNoteApp.Models.Enums;
 
 namespace WebNoteApp.Models
@@ -11,7 +12,7 @@ namespace WebNoteApp.Models
 
         public string Description { get; set; }
 
-        public string category { get; set; }
+        public string Category { get; set; }
 
         public string Created { get; set; }
 

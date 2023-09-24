@@ -1,4 +1,5 @@
 using WebNoteApp.Models;
+using WebNoteApp.Services.Api;
 
 namespace WebNoteApp
 {
@@ -8,15 +9,12 @@ namespace WebNoteApp
         {
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
+            var notes = new List<Note>();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            var notes = new List<Note>()
-            { 
-                new Note { Title="test title1", Description="test description"},
-                new Note { Title = "test title2", Description="test descriprion2"}
-            };
+                 
 
             app.Run(async (context) =>
             {
@@ -30,7 +28,10 @@ namespace WebNoteApp
                 }
                 else if (path == "/note" && request.Method == "POST")
                 {
-                    try
+                    
+
+                   ApiMethods.CreateUserAsync(response, request, notes);
+                   /* try
                     {
                         var json = await request.ReadFromJsonAsync<Note>();
                         Console.WriteLine(json.Title + " : " + json.Description + " : " + json.Created);
@@ -39,7 +40,7 @@ namespace WebNoteApp
                     {
                         response.StatusCode = 500;
                         await response.WriteAsJsonAsync(new {message = $"{ex.Message}"});
-                    }  
+                    }  */
                 }
             });
 

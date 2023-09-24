@@ -48,15 +48,18 @@ async function saveNote() {
         )
     });
 
+    hiddenButtons();
+    reset();
+
     if (response.ok === true){
-        alert("Данные дошли");
+        var mes = await response.json();
+        await alert(mes.message);
     }else{
         var sti = await response.json();
         alert(sti.message);
     }
 
-    hiddenButtons();
-    reset();
+    
 }
 
 function hiddenButtons() {
