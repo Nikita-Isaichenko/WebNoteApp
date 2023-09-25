@@ -12,6 +12,7 @@ function test(){
 
 document.getElementById("create").addEventListener("click", createNote);
 document.getElementById("save").addEventListener("click", saveNote);
+document.getElementById("cancel").addEventListener("click", cancelChanges);
 
 async function createNote() {
     var date = new Date();
@@ -57,9 +58,12 @@ async function saveNote() {
     }else{
         var sti = await response.json();
         alert(sti.message);
-    }
+    }    
+}
 
-    
+function cancelChanges(){
+    reset();
+    hiddenButtons();
 }
 
 function hiddenButtons() {

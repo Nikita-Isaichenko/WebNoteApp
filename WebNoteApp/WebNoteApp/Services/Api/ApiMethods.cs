@@ -14,7 +14,9 @@ namespace WebNoteApp.Services.Api
             try
             {
                 var note = await request.ReadFromJsonAsync<Note>();
+
                 notes.Add(note);
+
                 Console.WriteLine(note.Title);
                 Serializer.SaveToFile(notes);
                 Console.WriteLine("Сериализация прошла успешно");
