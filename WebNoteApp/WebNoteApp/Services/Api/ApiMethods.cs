@@ -2,29 +2,33 @@
 
 namespace WebNoteApp.Services.Api
 {
-    public static class ApiMethods
-    { 
+    public class ApiMethods
+    {
+        private List<Note> notes = new List<Note>();
 
-        public static async void CreateUserAsync(
-            HttpResponse response,
-            HttpRequest request,
-            List<Note> notes
-            )
+        public void CreateUser(Note note)
         {
             try
             {
-                var note = await request.ReadFromJsonAsync<Note>();
-
                 notes.Add(note);
 
-                Console.WriteLine(note.Title);
+                Console.WriteLine(notes.Count);
+
                 Serializer.SaveToFile(notes);
+
                 Console.WriteLine("Сериализация прошла успешно");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public List<Note> GetNotes()
+        {
+            notes = Serializer.LoadFromFile();
+
+            return notes;
         }
     }
 }

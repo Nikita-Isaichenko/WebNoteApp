@@ -8,41 +8,20 @@ namespace WebNoteApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
-            var notes = new List<Note>();
+            
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddSingleton<ApiMethods>();          
+
+            var app = builder.Build();           
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-                 
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
 
-            app.Run(async (context) =>
-            {
-                var response = context.Response;
-                var request = context.Request;
-                var path = request.Path;
-
-                if (path == "/note" && request.Method == "GET")
-                {
-                    await response.WriteAsJsonAsync(notes);
-                }
-                else if (path == "/note" && request.Method == "POST")
-                {
-                    
-
-                   ApiMethods.CreateUserAsync(response, request, notes);
-                   /* try
-                    {
-                        var json = await request.ReadFromJsonAsync<Note>();
-                        Console.WriteLine(json.Title + " : " + json.Description + " : " + json.Created);
-                    }
-                    catch (Exception ex)
-                    {
-                        response.StatusCode = 500;
-                        await response.WriteAsJsonAsync(new {message = $"{ex.Message}"});
-                    }  */
-                }
-            });
 
             app.Run();
         }

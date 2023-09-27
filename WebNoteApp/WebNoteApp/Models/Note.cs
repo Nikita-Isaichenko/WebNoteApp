@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebNoteApp.Models.Enums;
+﻿
 
 namespace WebNoteApp.Models
 {

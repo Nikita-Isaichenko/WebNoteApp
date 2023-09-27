@@ -15,6 +15,7 @@ document.getElementById("save").addEventListener("click", saveNote);
 document.getElementById("cancel").addEventListener("click", cancelChanges);
 
 async function createNote() {
+
     var date = new Date();
 
     dateCreated.removeAttribute("readonly");
@@ -32,7 +33,7 @@ async function createNote() {
 }
 
 async function saveNote() {
-    var response = await fetch("/note", {
+    var response = await fetch("/Home/CreateNote", {
         method: "POST",
         headers: {
             "Accept": "application/json",
