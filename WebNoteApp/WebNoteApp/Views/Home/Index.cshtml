@@ -1,7 +1,8 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+   
 *@
 @{
+    
 }
 <!DOCTYPE html>
 <html lang="en" style="height: 100%;">
@@ -15,7 +16,7 @@
     <title>NoteApp</title>
 </head>
 
-<body style="height: 100%;">
+<body style="height: 100%; background-color: grey;">
 
     <header class="container w-25 mx-auto" style="height: 5%;">
         LOGO
@@ -39,12 +40,7 @@
                             <label for="note" class="form-label mb-1">
                                 Заметки
                             </label>
-                            <select class="form-control mb-3" id="title" multiple="true">
-                                <option>All</option>
-                                <option>Personal</option>
-                                <option>Work</option>
-                                <option>Education</option>
-                                <option>other</option>
+                            <select class="form-control mb-3" id="title" multiple>
                             </select>
 
                             <div class="row gx-3" id="row-btn-1">
@@ -87,14 +83,15 @@
                     <div class="row pb-2">
                         <div class="col-md mb-3">
                             <label class="form-label mb-1" for="created">Created</label>
-                            <input class="form-control" type="text" name="" id="created" readonly>
+                            <input class="form-control" type="text" id="created" readonly>
                         </div>
                         <div class="col-md mb-3">
                             <label class="form-label mb-1" for="modified">Modified</label>
-                            <input class="form-control" type="text" name="" id="modified" readonly>
+                            <input class="form-control" type="text" id="modified" readonly>
                         </div>
                     </div>
-                    <textarea class="w-100 form-control" style="height: 400px;" name="text" id="text" readonly></textarea>
+                    <input type="text" id="noteId" hidden>
+                    <textarea class="w-100 form-control" style="height: 400px;" id="text" readonly></textarea>
 
                 </div>
             </div>
