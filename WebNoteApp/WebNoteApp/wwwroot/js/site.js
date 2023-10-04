@@ -5,7 +5,6 @@ var category = document.getElementById("category");
 var schema = document.getElementById("schema");
 var title = document.getElementById("title");
 var noteId = document.getElementById("noteId");
-var count = 1;
 var currentNote;
 var notes;
 
@@ -16,8 +15,9 @@ function test() {
 
 document.getElementById("create").addEventListener("click", createNote);
 document.getElementById("save").addEventListener("click", saveNote);
-// document.getElementById("cancel").addEventListener("click", cancelChanges);
-// document.getElementById("title").addEventListener('change', getNote);
+document.getElementById("cancel").addEventListener("click", cancelChanges);
+document.getElementById("title").addEventListener('change', getNote);
+
 // document.getElementById("edit").addEventListener("click", editNote);
 
 async function editNote() {
@@ -40,21 +40,12 @@ async function editNote() {
 
 async function createNote() {
 
-    var date = new Date();
-
     reset();
 
     title.setAttribute("disabled", true);
-    dateCreated.removeAttribute("readonly");
-    dateModified.removeAttribute("readonly");
     textarea.removeAttribute("readonly");
     schema.removeAttribute("readonly");
-    schema.value = "Безымянный " + count++;
-
-    dateCreated.value = date;
-    dateModified.value = date;
-    dateCreated.setAttribute("readonly", true);
-    dateModified.setAttribute("readonly", true);
+    schema.value = "Без имени";
 
     hiddenButtons();
 
@@ -73,23 +64,22 @@ async function saveNote() {
                     title: schema.value,
                     description: textarea.value,
                     category: category.value,
-                    created: dateCreated.value,
-                    modified: dateModified.value
                 }
             )
         });
 
         if (response.ok === true){
             var message = await response.json();
-            alert(message.message);
+            await alert(message.message);
         }
         else{
             var message = await response.json();
-            alert(message.message);
+            await alert(message.message);
         }
-        alert("save");
+
     hiddenButtons();
     reset();
+    getNotes();
 
 }
 
@@ -140,20 +130,20 @@ async function getNote(e) {
         }
     });
 
-    if (response.ok === true) {
-        currentNote = await response.json();
+    if (response.ok === true){
+        var note = await response.json();
 
-        if (currentNote != null) {
-            noteId.value = currentNote.id;
-            schema.value = currentNote.title;
-            dateCreated.value = currentNote.created;
-            dateModified.value = currentNote.modified;
-            textarea.value = currentNote.description;
-        }
+        schema.value = note.title;
+        textarea.value = note.description;
+        dateCreated.value = note.created;
+        dateModified.value = note.modified;
+        noteId.value = note.id;
     }
+
+
 }
 
-async function GetNotes() {
+async function getNotes() {
     var response = await fetch("/Home/GetNotes", {
         method: "GET",
         headers: {
@@ -165,6 +155,7 @@ async function GetNotes() {
     if (response.ok === true) {
 
         clearTitleBox();
+
         notes = await response.json();
 
         for (var i = 0; i < notes.length; i++) {
@@ -181,7 +172,7 @@ function clearTitleBox() {
 
 function addAttributeOption(stringTitle, noteId) {
     var option = document.createElement("option");
-    option.value = BigInt(noteId);
+    option.value = noteId;
     option.text = stringTitle;
 
     return option;

@@ -16,12 +16,12 @@
     <title>NoteApp</title>
 </head>
 
-<body style="height: 100%; background-color: grey;">
+<body style="height: 100%; background-color: grey;" onload="getNotes();">
 
     <header class="container w-25 mx-auto" style="height: 5%;">
         LOGO
     </header>
-    <main class="container border border-primary rounded h-auto">
+    <main class="container border border-primary rounded h-auto" >
         <div class="row h-auto">
             <div class="col-sm-4 h-auto">
                 <div class="container pb-3">
@@ -31,11 +31,10 @@
                                 Категории
                             </label>
                             <select class="form-control mb-3 category" id="category">
-                                <option>All</option>
-                                <option>Personal</option>
-                                <option>Work</option>
-                                <option>Education</option>
-                                <option>other</option>
+                                @for (int i = 0; i < ViewBag.NotesCategoryList.Length; i++)
+                                {
+                                    <option value="@ViewBag.NotesCategoryList[i]">@ViewBag.NotesCategoryList[i]</option>
+                                }                               
                             </select>
                             <label for="note" class="form-label mb-1">
                                 Заметки

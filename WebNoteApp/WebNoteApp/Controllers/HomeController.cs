@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebNoteApp.DataBase;
 using WebNoteApp.Models;
-
+using WebNoteApp.Models.Enums;
 
 namespace WebNoteApp.Controllers
 {
@@ -30,7 +30,9 @@ namespace WebNoteApp.Controllers
         /// <returns>Возвращает представление для контроллера <see cref="HomeController"/>.</returns>
         [HttpGet]
         public  IActionResult Index()
-        {
+        {           
+            ViewBag.NotesCategoryList = Enum.GetValues(typeof(NotesCategory));
+
             return View();
         }
 
@@ -55,19 +57,44 @@ namespace WebNoteApp.Controllers
             }
         }
 
-        /*[HttpGet]
-        public IActionResult GetNote(long id)
+        /// <summary>
+        /// Обрабатывает GET-запросы.
+        /// Возвращает запись по ее id.
+        /// </summary>
+        /// <param name="id">id записи.</param>
+        /// <returns>Запись в формате json.</returns>
+        [HttpGet]
+        public IActionResult GetNote(int id)
         {
+            var note = _crud.GetNote(id);
 
+            if (note != null)
+            {
+                return Ok(note);
+            }
+
+            return Json(new { message = "Запись не найдена." });      
         }
 
+        /// <summary>
+        /// Обрабатывает GET-запросы.
+        /// Возвращает список записок в формате json.
+        /// </summary>
+        /// <returns>Список записок в формате json.</returns>
         [HttpGet]
         public IActionResult GetNotes()
         {
+            var notes = _crud.GetNotes();
 
+            if (notes != null)
+            {
+                return Ok(notes);
+            }
+
+            return Json(new {message = "Записи не найдены."});
         }
 
-        [HttpPut]
+        /*[HttpPut]
         public IActionResult UpdateNote(Note note)
         {
 
