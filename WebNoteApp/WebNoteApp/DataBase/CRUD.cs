@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Newtonsoft.Json.Bson;
 using WebNoteApp.Models;
 
 namespace WebNoteApp.DataBase
@@ -54,6 +55,34 @@ namespace WebNoteApp.DataBase
         public Note ReadNote(int id)
         {
             return _db.Notes.FirstOrDefault(x => x.Id == id);
+        }
+
+        /// <summary>
+        /// Изменяет и сохраняет запись в базу данных.
+        /// </summary>
+        /// <param name="note">Редактируемая запись.</param>
+        /// <returns>Отредактированную запись</returns>
+        public async Task<Note> UpdateNote(Note note)
+        {
+            var noteBuffer = _db.Notes.Find(note.Id);
+
+            noteBuffer.Title = note.Title;
+            noteBuffer.Description = note.Description;
+            noteBuffer.Modified = DateTime.Now;
+
+            await _db.SaveChangesAsync();
+
+            return _db.Notes.Find(note.Id);
+        }
+
+        /// <summary>
+        /// Удаляет запись из базы данных.
+        /// </summary>
+        /// <param name="id">Id удаляемой записи.</param>
+        public async Task DeleteNote(int id)
+        {
+            _db.Notes.Remove(ReadNote(id));
+            await _db.SaveChangesAsync();
         }
     }
 }

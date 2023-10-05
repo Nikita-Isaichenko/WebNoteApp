@@ -29,8 +29,8 @@ namespace WebNoteApp.Controllers
         /// </summary>
         /// <returns>Возвращает представление для контроллера <see cref="HomeController"/>.</returns>
         [HttpGet]
-        public  IActionResult Index()
-        {           
+        public IActionResult Index()
+        {
             ViewBag.NotesCategoryList = Enum.GetValues(typeof(NotesCategory));
 
             return View();
@@ -49,7 +49,7 @@ namespace WebNoteApp.Controllers
             {
                 await _crud.CreateAsync(note);
 
-                return Ok(new {message = "Заметка создана."});
+                return Ok(new { message = "Заметка создана." });
             }
             catch (Exception ex)
             {
@@ -66,14 +66,14 @@ namespace WebNoteApp.Controllers
         [HttpGet]
         public IActionResult GetNote(int id)
         {
-            var note = _crud.GetNote(id);
+            var note = _crud.ReadNote(id);
 
             if (note != null)
             {
                 return Ok(note);
             }
 
-            return Json(new { message = "Запись не найдена." });      
+            return Json(new { message = "Запись не найдена." });
         }
 
         /// <summary>
@@ -84,20 +84,47 @@ namespace WebNoteApp.Controllers
         [HttpGet]
         public IActionResult GetNotes()
         {
-            var notes = _crud.GetNotes();
+            var notes = _crud.ReadNotes();
 
             if (notes != null)
             {
                 return Ok(notes);
             }
 
-            return Json(new {message = "Записи не найдены."});
+            return Json(new { message = "Записи не найдены." });
         }
 
-        /*[HttpPut]
-        public IActionResult UpdateNote(Note note)
+        /// <summary>
+        /// Обрабатывает POST-запросы.
+        /// Возвращает измененную запись.
+        /// </summary>
+        /// <param name="note">Запись с новыми данными.</param>
+        /// <returns>Измененная запись.</returns>
+        [HttpPut]
+        public IActionResult UpdateNote([FromBody] Note note)
         {
+            var modifiedNote = _crud.UpdateNote(note);
 
-        }*/
+            if (modifiedNote != null)
+            {
+                return Ok(modifiedNote);
+            }
+
+            return Json(new { message = "Ошибка изменения." });
+        }
+
+        /// <summary>
+        /// Обрабатывает DELETE-запросы.
+        /// Удаляет запись по id.
+        /// </summary>
+        /// <param name="id">id удаляемой записи.</param>
+        /// <returns>Ответ сервера 200.</returns>
+        [HttpDelete]
+        public IActionResult DeleteNote(int id)
+        {
+            _crud.DeleteNote(id);
+
+            return Ok();
+        }
     }
 }
