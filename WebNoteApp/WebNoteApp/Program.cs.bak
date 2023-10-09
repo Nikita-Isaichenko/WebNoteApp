@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 namespace WebNoteApp
 {
     /// <summary>
-    /// РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂР°РјРјРµ.
+    /// Хранит информацию о программе.
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// РўРѕС‡РєР° РІС…РѕРґР° РІ РїСЂРёР»РѕР¶РµРЅРёРµ.
+        /// Точка входа в приложение.
         /// </summary>
-        /// <param name="args">РђСЂРіСѓРјРµРЅС‚С‹ РёР· РєРѕРЅСЃРѕР»Рё.</param>
+        /// <param name="args">Аргументы из консоли.</param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
