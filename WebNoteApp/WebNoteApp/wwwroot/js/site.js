@@ -108,8 +108,8 @@ function setValue(note) {
     if (note != null){
         schema.value = note.title;
         textarea.value = note.description;
-        dateCreated.value = note.created;
-        dateModified.value = note.modified;
+        dateCreated.value = new Date(note.created).toLocaleString();
+        dateModified.value = new Date(note.modified).toLocaleString();
         noteId.value = note.id;
         document.getElementById("category").value = note.category;
     }
