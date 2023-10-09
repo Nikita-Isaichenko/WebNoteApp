@@ -5,8 +5,6 @@ var category = document.getElementById("category");
 var schema = document.getElementById("schema");
 var title = document.getElementById("title");
 var noteId = document.getElementById("noteId");
-var currentNote;
-var notes;
 var isCreate;
 
 document.getElementById("create").addEventListener("click", createNote);
@@ -16,6 +14,7 @@ document.getElementById("title").addEventListener('change', getNote);
 document.getElementById("edit").addEventListener("click", editNote);
 document.getElementById("delete").addEventListener("click", deleteNote);
 
+// Обрабатывает нажатие на кнопку Edit.
 function editNote() {
 
     isCreate = false;
@@ -26,6 +25,7 @@ function editNote() {
     hiddenButtons();
 }
 
+// Обрабатывает нажатие на кнопку Create.
 function createNote() {
 
     isCreate = true;
@@ -39,12 +39,14 @@ function createNote() {
     hiddenButtons();
 }
 
+// Обрабатывает нажатие на кнопку Cancel.
 function cancelChanges() {
     reset();
     hiddenButtons();
     title.dispatchEvent(new Event('change'));
 }
 
+// Скрывает одну группу кнопок, показывая другую.
 function hiddenButtons() {
     var rowButtons1 = document.getElementById("row-btn-1");
     var rowButtons2 = document.getElementById("row-btn-2");
@@ -61,6 +63,7 @@ function hiddenButtons() {
 
 }
 
+// Сбрасывает состояние текстбоксов, устанавливая свойство readonly.
 function reset() {
     textarea.value = null;
     dateCreated.value = null;
@@ -71,12 +74,14 @@ function reset() {
     title.removeAttribute("disabled");
 }
 
+// Очищает listbox с заголовками.
 function clearTitleBox() {
     while (title.options.length > 0) {
         title.remove(0);
     }
 }
 
+// Создает и добавляет DOM объект option.
 function addAttributeOption(stringTitle, Id) {
     var option = document.createElement("option");
     option.value = Id;
@@ -90,6 +95,7 @@ function addAttributeOption(stringTitle, Id) {
     return option;
 }
 
+// Устанавливает значения для текстбоксов.
 function setValue(note) {
     if (note != null){
         schema.value = note.title;
