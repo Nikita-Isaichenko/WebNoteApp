@@ -80,7 +80,7 @@ async function saveNote() {
         await saveEditedNote();
     }
 
-    hiddenButtons();
+    hiddenElements();
     reset();
     await getNotes();
 }
@@ -99,18 +99,18 @@ async function saveCreatedNote() {
             {
                 title: schema.value,
                 description: textarea.value,
-                category: category.value,
+                category: document.getElementById("category").value,
             }
         )
     });
 
     if (response.ok === true) {
         var message = await response.json();
-        alert(message.message);
+        console.log(message.message);
     }
     else {
         var message = await response.json();
-        alert(message.message);
+        console.log(message.message);
     }
 }
 
@@ -128,12 +128,12 @@ async function saveEditedNote() {
                 id: noteId.value,
                 title: schema.value,
                 description: textarea.value,
-                category: category.value,
+                category: document.getElementById("category").value,
             }
         )
     });
 
     if (response.ok === true) {
-        alert("Update запрос прошел");
+        console.log("Update запрос прошел");
     }
 }

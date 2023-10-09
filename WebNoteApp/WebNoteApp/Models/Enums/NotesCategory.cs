@@ -6,6 +6,10 @@
     public enum NotesCategory
     {
         /// <summary>
+        /// Все.
+        /// </summary>
+        All,
+        /// <summary>
         /// Работа.
         /// </summary>
         Work,

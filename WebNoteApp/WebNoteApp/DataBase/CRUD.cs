@@ -68,6 +68,7 @@ namespace WebNoteApp.DataBase
 
             noteBuffer.Title = note.Title;
             noteBuffer.Description = note.Description;
+            noteBuffer.Category = note.Category;
             noteBuffer.Modified = DateTime.Now;
 
             await _db.SaveChangesAsync();

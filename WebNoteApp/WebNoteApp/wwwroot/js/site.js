@@ -1,7 +1,7 @@
 ﻿var textarea = document.getElementById("text");
 var dateCreated = document.getElementById("created");
 var dateModified = document.getElementById("modified");
-var category = document.getElementById("category");
+var category_filter = document.getElementById("category_filter");
 var schema = document.getElementById("schema");
 var title = document.getElementById("title");
 var noteId = document.getElementById("noteId");
@@ -18,47 +18,55 @@ document.getElementById("delete").addEventListener("click", deleteNote);
 function editNote() {
 
     isCreate = false;
+
+    changeAttribute();
+
+    hiddenElements();
+}
+
+function changeAttribute(){
+    category_filter.setAttribute("disabled", true);
     title.setAttribute("disabled", true);
     textarea.removeAttribute("readonly");
     schema.removeAttribute("readonly");
-
-    hiddenButtons();
 }
 
 // Обрабатывает нажатие на кнопку Create.
 function createNote() {
 
     isCreate = true;
-    reset();
 
-    title.setAttribute("disabled", true);
-    textarea.removeAttribute("readonly");
-    schema.removeAttribute("readonly");
+    reset();
+    changeAttribute();
+
     schema.value = "Без названия";
 
-    hiddenButtons();
+    hiddenElements();
 }
 
 // Обрабатывает нажатие на кнопку Cancel.
 function cancelChanges() {
     reset();
-    hiddenButtons();
+    hiddenElements();
     title.dispatchEvent(new Event('change'));
 }
 
 // Скрывает одну группу кнопок, показывая другую.
-function hiddenButtons() {
+function hiddenElements() {
     var rowButtons1 = document.getElementById("row-btn-1");
     var rowButtons2 = document.getElementById("row-btn-2");
+    var div_category_hidden = document.getElementById("div_category_hidden");
 
 
     if (rowButtons1.hidden) {
         rowButtons1.hidden = false;
         rowButtons2.hidden = true;
+        div_category_hidden.hidden = true;
     }
     else {
         rowButtons1.hidden = true;
         rowButtons2.hidden = false;
+        div_category_hidden.hidden = false;
     }
 
 }
@@ -69,6 +77,7 @@ function reset() {
     dateCreated.value = null;
     dateModified.value = null;
     schema.value = null;
+    category_filter.removeAttribute("disabled");
     textarea.setAttribute("readonly", true);
     schema.setAttribute("readonly", true);
     title.removeAttribute("disabled");
@@ -88,7 +97,6 @@ function addAttributeOption(stringTitle, Id) {
     option.text = stringTitle;
 
     if (noteId.value != "" && Id == noteId.value) {
-        alert("Сравнение");
         option.setAttribute("selected", true);
     }
 
@@ -103,6 +111,7 @@ function setValue(note) {
         dateCreated.value = note.created;
         dateModified.value = note.modified;
         noteId.value = note.id;
+        document.getElementById("category").value = note.category;
     }
     else{
         schema.value = "";
