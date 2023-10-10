@@ -49,11 +49,14 @@ namespace WebNoteApp.DataBase
         {
             if (category == NotesCategory.All.ToString())
             {
-                return _db.Notes.ToList();
+                return _db.Notes.OrderByDescending(c => c.Modified).ToList();
             }
             else
             {
-                return _db.Notes.Where(a => a.Category == category).ToList();
+                return _db.Notes
+                    .OrderByDescending(c => c.Modified)
+                    .Where(a => a.Category == category)             
+                    .ToList();
             }
         }
 
