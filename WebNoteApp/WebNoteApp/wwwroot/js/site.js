@@ -13,6 +13,7 @@ document.getElementById("cancel").addEventListener("click", cancelChanges);
 document.getElementById("title").addEventListener('change', getNote);
 document.getElementById("edit").addEventListener("click", editNote);
 document.getElementById("delete").addEventListener("click", deleteNote);
+document.getElementById("category_filter").addEventListener("change", getNotes);
 
 // Обрабатывает нажатие на кнопку Edit.
 function editNote() {

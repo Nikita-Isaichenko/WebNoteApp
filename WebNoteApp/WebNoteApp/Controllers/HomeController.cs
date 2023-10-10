@@ -80,11 +80,12 @@ namespace WebNoteApp.Controllers
         /// Обрабатывает GET-запросы.
         /// Возвращает список записок в формате json.
         /// </summary>
-        /// <returns>Список записок в формате json.</returns>
+        /// <param name="category">категория записи.</param>
+        /// <returns>Список записок определенной категории в формате json.</returns>
         [HttpGet]
-        public IActionResult GetNotes()
+        public IActionResult GetNotes(string category)
         {
-            var notes = _crud.ReadNotes();
+            var notes = _crud.ReadNotes(category);
 
             if (notes != null)
             {

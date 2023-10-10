@@ -1,35 +1,54 @@
 // Get-запрос на получение всех записок.
 async function getNotes() {
     console.log("getnotes");
-    var response = await fetch("/Home/GetNotes", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    });
+    var response = await fetch(
+        `/Home/GetNotes?category=${document.getElementById("category_filter").value}`,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        });
 
     if (response.ok === true) {
-
-        clearTitleBox();
-
-        notes = await response.json();
-
-        for (var i = 0; i < notes.length; i++) {
-            title.appendChild(addAttributeOption(notes[i].title, notes[i].id));
-        }
-
-        if (noteId.value == ""){
-            title.options[title.options.length - 1].setAttribute("selected", true);
-        }
-
-        title.dispatchEvent(new Event('change'));
+        fillListTitle(await response.json());
     }
+}
+
+//Get-запрос на получение записок определенной категории
+// async function getNotesWithCategory(e) {
+//     var response = await fetch(`/Home/GetNotes?category=${e.target.value}`, {
+//         method: "GET",
+//         headers: {
+//             "Accept": "application/json",
+//             "Content-Type": "application/json"
+//         }
+//     });
+
+//     if (response.ok === true) {
+//         fillListTitle(await response.json());
+//     }
+// }
+
+// Заполняет список заголовков данными.
+function fillListTitle(notes) {
+    clearTitleBox();
+
+    for (var i = 0; i < notes.length; i++) {
+        title.appendChild(addAttributeOption(notes[i].title, notes[i].id));
+    }
+
+    if (noteId.value == "") {
+        title.options[title.options.length - 1].setAttribute("selected", true);
+    }
+
+    title.dispatchEvent(new Event('change'));
 }
 
 // Get-запрос на получение одной записи по id.
 async function getNote(e) {
-    if (e.target.value != ""){
+    if (e.target.value != "") {
         var response = await fetch(`/Home/GetNote?id=${e.target.value}`, {
             method: "GET",
             headers: {
@@ -37,14 +56,14 @@ async function getNote(e) {
                 "Content-Type": "application/json"
             }
         });
-    
+
         if (response.ok === true) {
             var note = await response.json();
-    
+
             setValue(note);
         }
     }
-    else{
+    else {
         setValue(null);
     }
 

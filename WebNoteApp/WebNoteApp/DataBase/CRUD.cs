@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Newtonsoft.Json.Bson;
 using WebNoteApp.Models;
+using WebNoteApp.Models.Enums;
 
 namespace WebNoteApp.DataBase
 {
@@ -41,10 +43,18 @@ namespace WebNoteApp.DataBase
         /// <summary>
         /// Возвращает все записки из базы данных
         /// </summary>
-        /// <returns></returns>
-        public List<Note> ReadNotes()
+        /// <param name="category">Категория записок.</param>
+        /// <returns>Список записок определенной категории.</returns>
+        public List<Note> ReadNotes(string category)
         {
-            return _db.Notes.ToList();
+            if (category == NotesCategory.All.ToString())
+            {
+                return _db.Notes.ToList();
+            }
+            else
+            {
+                return _db.Notes.Where(a => a.Category == category).ToList();
+            }
         }
 
         /// <summary>
