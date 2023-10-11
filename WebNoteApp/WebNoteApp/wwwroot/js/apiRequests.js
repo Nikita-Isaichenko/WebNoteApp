@@ -16,40 +16,25 @@ async function getNotes() {
     }
 }
 
-//Get-запрос на получение записок определенной категории
-// async function getNotesWithCategory(e) {
-//     var response = await fetch(`/Home/GetNotes?category=${e.target.value}`, {
-//         method: "GET",
-//         headers: {
-//             "Accept": "application/json",
-//             "Content-Type": "application/json"
-//         }
-//     });
-
-//     if (response.ok === true) {
-//         fillListTitle(await response.json());
-//     }
-// }
-
 // Заполняет список заголовков данными.
 function fillListTitle(notes) {
     clearTitleBox();
 
     for (var i = 0; i < notes.length; i++) {
-        title.appendChild(addAttributeOption(notes[i].title, notes[i].id));
+        notesTitlesSelector.appendChild(addAttributeOption(notes[i].title, notes[i].id));
     }
 
     if (noteId.value == "") {
-        title.options[title.options.length - 1].setAttribute("selected", true);
+        notesTitlesSelector.options[notesTitlesSelector.options.length - 1].setAttribute("selected", true);
     }
 
-    title.dispatchEvent(new Event('change'));
+    notesTitlesSelector.dispatchEvent(new Event('change'));
 }
 
 // Get-запрос на получение одной записи по id.
-async function getNote(e) {
-    if (e.target.value != "") {
-        var response = await fetch(`/Home/GetNote?id=${e.target.value}`, {
+async function getNote(event) {
+    if (event.target.value != "") {
+        var response = await fetch(`/Home/GetNote?id=${event.target.value}`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -66,7 +51,6 @@ async function getNote(e) {
     else {
         setValue(null);
     }
-
 }
 
 // Delete-запрос для удаления записки по id.

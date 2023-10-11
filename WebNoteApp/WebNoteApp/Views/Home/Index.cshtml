@@ -39,9 +39,8 @@
                             <label for="note" class="form-label mb-1">
                                 Заметки
                             </label>
-                            <select class="form-control mb-3" id="title" multiple>
+                            <select class="form-control mb-3" id="notes_titles_selector" size="10" multiple>
                             </select>
-
                             <div class="row gx-3" id="row-btn-1">
                                 <div class="col-lg-4 mb-3">
                                     <button class="btn btn-primary" id="create">
@@ -78,18 +77,16 @@
             </div>
             <div class="col-sm-8 h-auto">
                 <div class="container pb-3">
-                    <input type="text" class="form-control my-3" id="schema" placeholder="Тема" readonly>
-                    <div id="div_category_hidden" hidden>
-                        <label for="category mb-3" class="form-label mb-1">
-                        Выберите категорию: 
+                    <input type="text" class="form-control my-3" id="schema" placeholder="Тема" readonly>                    
+                    <label for="category mb-3" class="form-label mb-1">
+                        Категория:
                     </label>
-                    <select class="form-control mb-3 category" id="category">
+                    <select class="form-control mb-3 category" id="category" disabled>
                         @for (int i = 1; i < ViewBag.NotesCategoryList.Length; i++)
                         {
                             <option value="@ViewBag.NotesCategoryList[i]">@ViewBag.NotesCategoryList[i]</option>
                         }
-                    </select>
-                    </div>
+                    </select>                    
                     <div class="row pb-2">
                         <div class="col-md mb-3">
                             <label class="form-label mb-1" for="created">Created</label>
@@ -101,7 +98,7 @@
                         </div>
                     </div>
                     <input type="text" id="noteId" hidden>
-                    <textarea class="w-100 form-control" style="height: 400px;" id="text" readonly></textarea>
+                    <textarea class="w-100 form-control" style="height: 300px;" id="text" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -114,12 +111,12 @@
     </script>
     <script type="text/javascript" src="~/js/apiRequests.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
-scrisrc="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-            crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

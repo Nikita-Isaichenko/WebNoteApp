@@ -23,8 +23,6 @@ namespace WebNoteApp.DataBase
         public CRUD(AppDbContext db) 
         {
             _db = db;
-
-            Console.WriteLine("Конструктор CRUD");
         }
 
         /// <summary>
