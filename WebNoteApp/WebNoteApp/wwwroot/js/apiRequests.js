@@ -11,8 +11,14 @@ async function getNotes() {
             }
         });
 
+    var obj = await response.json();
+
     if (response.ok === true) {
-        fillListTitle(await response.json());
+        fillListTitle(obj);
+    }
+    else{
+        showModal(obj.message);
+        console.log(obj.message);
     }
 }
 
@@ -42,10 +48,14 @@ async function getNote(event) {
             }
         });
 
-        if (response.ok === true) {
-            var note = await response.json();
+        var obj = await response.json();
 
-            setValue(note);
+        if (response.ok === true) {
+            setValue(obj);
+        }
+        else {
+            showModal(obj.message);
+            console.log(obj.message);
         }
     }
     else {
@@ -57,6 +67,7 @@ async function getNote(event) {
 async function deleteNote() {
     console.log("deletenote");
     if (noteId.value) {
+
         var response = await fetch(`/Home/DeleteNote?id=${noteId.value}`, {
             method: "DELETE",
             headers: {
@@ -69,9 +80,14 @@ async function deleteNote() {
             noteId.value = "";
             await getNotes();
         }
+        else {
+            var obj = await response.json();
+            showModal(obj.message);
+            console.log(obj.message);
+        }
     }
     else {
-        alert("Выберите запись для удаления!");
+        showModal("Выберите запись для удаления!");
     }
 }
 
@@ -90,9 +106,7 @@ async function saveNote() {
 
 // Post-запрос для создания записки.
 async function saveCreatedNote() {
-    console.log("savecreatednote");
 
-    try {
         noteId.value = "";
         var response = await fetch("/Home/CreateNote", {
             method: "POST",
@@ -108,33 +122,48 @@ async function saveCreatedNote() {
                 }
             )
         });
-    }
-    catch {
-        var error = await response.json();
-        console.log(error.message);
-    }
+        
+        var obj = await response.json()
+
+        if (response.ok === true){
+            console.log(obj.message)
+        }
+        else{
+            showModal(obj.message);
+            console.log(obj.message);
+        }
+
 }
 
 // Put-запрос для изменения записки.
 async function saveEditedNote() {
     console.log("saveeditnote");
-    var response = await fetch("/Home/UpdateNote", {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(
-            {
-                id: noteId.value,
-                title: schema.value,
-                description: textarea.value,
-                category: document.getElementById("category").value,
-            }
-        )
-    });
+        var response = await fetch("/Home/UpdateNote", {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    id: noteId.value,
+                    title: schema.value,
+                    description: textarea.value,
+                    category: document.getElementById("category").value,
+                }
+            )
+        });
 
-    if (response.ok === true) {
-        console.log("Update запрос прошел");
-    }
+        var obj = await response.json()
+
+        if (response.ok === true){
+            console.log(obj.message)
+        }
+        else{
+            showModal(obj.message);
+            console.log(obj.message);
+        }
+        
+
+
 }

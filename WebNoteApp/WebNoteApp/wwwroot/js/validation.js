@@ -1,4 +1,5 @@
-function checkValid(event){
+// Проверяет количество символов темы заметки.
+function checkValidSchema(event){
     var errorSpan = document.getElementById("errorMessage");
     var saveButton = document.getElementById("save");
 

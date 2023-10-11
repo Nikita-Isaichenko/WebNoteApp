@@ -51,11 +51,13 @@ namespace WebNoteApp.Controllers
 
                 return Ok("Заметка создана");
             }
-            else
-            {
-                return BadRequest(note);
-            }
-            
+
+            return BadRequest(
+                new 
+                {
+                    note,
+                    message = "Неверные значения для свойств объекта"
+                });          
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace WebNoteApp.Controllers
                 return Ok(note);
             }
 
-            return Json(new { message = "Запись не найдена." });
+            return NotFound(new { message = "Заметка не найдена." });
         }
 
         /// <summary>
@@ -93,7 +95,7 @@ namespace WebNoteApp.Controllers
                 return Ok(notes);
             }
 
-            return Json(new { message = "Записи не найдены." });
+            return NotFound(new { message = $"Заметки категории {category} не найдены." });
         }
 
         /// <summary>
@@ -106,13 +108,13 @@ namespace WebNoteApp.Controllers
         public IActionResult UpdateNote([FromBody] Note note)
         {
             var modifiedNote = _crud.UpdateNote(note);
-
+/*
             if (modifiedNote != null)
             {
                 return Ok(modifiedNote);
-            }
+            }*/
 
-            return Json(new { message = "Ошибка изменения." });
+            return BadRequest(new { message = "Ошибка изменения заметки." });
         }
 
         /// <summary>
