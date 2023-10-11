@@ -91,29 +91,27 @@ async function saveNote() {
 // Post-запрос для создания записки.
 async function saveCreatedNote() {
     console.log("savecreatednote");
-    noteId.value = "";
-    var response = await fetch("/Home/CreateNote", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(
-            {
-                title: schema.value,
-                description: textarea.value,
-                category: document.getElementById("category").value,
-            }
-        )
-    });
 
-    if (response.ok === true) {
-        var message = await response.json();
-        console.log(message.message);
+    try {
+        noteId.value = "";
+        var response = await fetch("/Home/CreateNote", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    title: schema.value,
+                    description: textarea.value,
+                    category: document.getElementById("category").value,
+                }
+            )
+        });
     }
-    else {
-        var message = await response.json();
-        console.log(message.message);
+    catch {
+        var error = await response.json();
+        console.log(error.message);
     }
 }
 

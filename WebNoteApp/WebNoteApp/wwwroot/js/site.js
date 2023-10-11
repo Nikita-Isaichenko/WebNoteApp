@@ -15,6 +15,7 @@ document.getElementById("notes_titles_selector").addEventListener('change', getN
 document.getElementById("edit").addEventListener("click", editNote);
 document.getElementById("delete").addEventListener("click", deleteNote);
 document.getElementById("category_filter").addEventListener("change", getNotes);
+schema.addEventListener("input", checkValid);
 
 // Обрабатывает нажатие на кнопку Edit.
 function editNote() {
@@ -81,6 +82,7 @@ function reset() {
     textarea.setAttribute("readonly", true);
     schema.setAttribute("readonly", true);
     notesTitlesSelector.removeAttribute("disabled");
+    schema.dispatchEvent(new Event("input"));
 }
 
 // Очищает listbox с заголовками.

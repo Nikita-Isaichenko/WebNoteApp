@@ -45,16 +45,17 @@ namespace WebNoteApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNote([FromBody] Note note)
         {
-            try
+            if (ModelState.IsValid)
             {
                 await _crud.CreateAsync(note);
 
-                return Ok(new { message = "Заметка создана." });
+                return Ok("Заметка создана");
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(note);
             }
+            
         }
 
         /// <summary>

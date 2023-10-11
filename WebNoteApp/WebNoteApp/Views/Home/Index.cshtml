@@ -1,10 +1,4 @@
-﻿@*
-
-*@
-@{
-
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" style="height: 100%;">
 
 <head>
@@ -16,7 +10,7 @@
     <title>NoteApp</title>
 </head>
 
-<body style="height: 100%; background-color: grey;" onload="getNotes();">
+<body style="height: 100%;" onload="getNotes();">
 
     <header class="container w-25 mx-auto" style="height: 5%;">
         LOGO
@@ -77,8 +71,9 @@
             </div>
             <div class="col-sm-8 h-auto">
                 <div class="container pb-3">
-                    <input type="text" class="form-control my-3" id="schema" placeholder="Тема" readonly>                    
-                    <label for="category mb-3" class="form-label mb-1">
+                    <input type="text" class="form-control mt-3" id="schema" placeholder="Тема" readonly />
+                    <span class="text-danger" id="errorMessage" hidden></span><br/>
+                    <label for="category my-3" class="form-label mb-1">
                         Категория:
                     </label>
                     <select class="form-control mb-3 category" id="category" disabled>
@@ -86,7 +81,7 @@
                         {
                             <option value="@ViewBag.NotesCategoryList[i]">@ViewBag.NotesCategoryList[i]</option>
                         }
-                    </select>                    
+                    </select>
                     <div class="row pb-2">
                         <div class="col-md mb-3">
                             <label class="form-label mb-1" for="created">Created</label>
@@ -109,6 +104,7 @@
     <script>
 
     </script>
+    <script type="text/javascript" src="~/js/validation.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/apiRequests.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
