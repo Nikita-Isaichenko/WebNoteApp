@@ -1,18 +1,20 @@
 ﻿var textarea = document.getElementById("text");
 var dateCreated = document.getElementById("created");
 var dateModified = document.getElementById("modified");
-var category_filter = document.getElementById("category_filter");
+var categoryFilter = document.getElementById("category_filter");
+var category = document.getElementById("category");
 var schema = document.getElementById("schema");
-var title = document.getElementById("title");
+var notesTitlesSelector = document.getElementById("notes_titles_selector");
 var noteId = document.getElementById("noteId");
 var isCreate;
 
 document.getElementById("create").addEventListener("click", createNote);
 document.getElementById("save").addEventListener("click", saveNote);
 document.getElementById("cancel").addEventListener("click", cancelChanges);
-document.getElementById("title").addEventListener('change', getNote);
+document.getElementById("notes_titles_selector").addEventListener('change', getNote);
 document.getElementById("edit").addEventListener("click", editNote);
 document.getElementById("delete").addEventListener("click", deleteNote);
+document.getElementById("category_filter").addEventListener("change", getNotes);
 
 // Обрабатывает нажатие на кнопку Edit.
 function editNote() {
@@ -24,9 +26,10 @@ function editNote() {
     hiddenElements();
 }
 
-function changeAttribute(){
-    category_filter.setAttribute("disabled", true);
-    title.setAttribute("disabled", true);
+function changeAttribute() {
+    categoryFilter.setAttribute("disabled", true);
+    notesTitlesSelector.setAttribute("disabled", true);
+    category.removeAttribute("disabled");
     textarea.removeAttribute("readonly");
     schema.removeAttribute("readonly");
 }
@@ -48,25 +51,21 @@ function createNote() {
 function cancelChanges() {
     reset();
     hiddenElements();
-    title.dispatchEvent(new Event('change'));
+    notesTitlesSelector.dispatchEvent(new Event('change'));
 }
 
 // Скрывает одну группу кнопок, показывая другую.
 function hiddenElements() {
     var rowButtons1 = document.getElementById("row-btn-1");
     var rowButtons2 = document.getElementById("row-btn-2");
-    var div_category_hidden = document.getElementById("div_category_hidden");
-
 
     if (rowButtons1.hidden) {
         rowButtons1.hidden = false;
         rowButtons2.hidden = true;
-        div_category_hidden.hidden = true;
     }
     else {
         rowButtons1.hidden = true;
-        rowButtons2.hidden = false;
-        div_category_hidden.hidden = false;
+        rowButtons2.hidden = false;       
     }
 
 }
@@ -77,16 +76,17 @@ function reset() {
     dateCreated.value = null;
     dateModified.value = null;
     schema.value = null;
-    category_filter.removeAttribute("disabled");
+    categoryFilter.removeAttribute("disabled");
+    category.setAttribute("disabled", true);
     textarea.setAttribute("readonly", true);
     schema.setAttribute("readonly", true);
-    title.removeAttribute("disabled");
+    notesTitlesSelector.removeAttribute("disabled");
 }
 
 // Очищает listbox с заголовками.
 function clearTitleBox() {
-    while (title.options.length > 0) {
-        title.remove(0);
+    while (notesTitlesSelector.options.length > 0) {
+        notesTitlesSelector.remove(0);
     }
 }
 
@@ -105,7 +105,7 @@ function addAttributeOption(stringTitle, Id) {
 
 // Устанавливает значения для текстбоксов.
 function setValue(note) {
-    if (note != null){
+    if (note != null) {
         schema.value = note.title;
         textarea.value = note.description;
         dateCreated.value = new Date(note.created).toLocaleString();
@@ -113,7 +113,7 @@ function setValue(note) {
         noteId.value = note.id;
         document.getElementById("category").value = note.category;
     }
-    else{
+    else {
         schema.value = "";
         textarea.value = "";
         dateCreated.value = "";

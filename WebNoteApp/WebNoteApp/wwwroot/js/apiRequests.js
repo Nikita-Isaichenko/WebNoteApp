@@ -1,53 +1,56 @@
 // Get-запрос на получение всех записок.
 async function getNotes() {
     console.log("getnotes");
-    var response = await fetch("/Home/GetNotes", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    });
-
-    if (response.ok === true) {
-
-        clearTitleBox();
-
-        notes = await response.json();
-
-        for (var i = 0; i < notes.length; i++) {
-            title.appendChild(addAttributeOption(notes[i].title, notes[i].id));
-        }
-
-        if (noteId.value == ""){
-            title.options[title.options.length - 1].setAttribute("selected", true);
-        }
-
-        title.dispatchEvent(new Event('change'));
-    }
-}
-
-// Get-запрос на получение одной записи по id.
-async function getNote(e) {
-    if (e.target.value != ""){
-        var response = await fetch(`/Home/GetNote?id=${e.target.value}`, {
+    var response = await fetch(
+        `/Home/GetNotes?category=${document.getElementById("category_filter").value}`,
+        {
             method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
         });
-    
+
+    if (response.ok === true) {
+        fillListTitle(await response.json());
+    }
+}
+
+// Заполняет список заголовков данными.
+function fillListTitle(notes) {
+    clearTitleBox();
+
+    for (var i = 0; i < notes.length; i++) {
+        notesTitlesSelector.appendChild(addAttributeOption(notes[i].title, notes[i].id));
+    }
+
+    if (noteId.value == "") {
+        notesTitlesSelector.options[notesTitlesSelector.options.length - 1].setAttribute("selected", true);
+    }
+
+    notesTitlesSelector.dispatchEvent(new Event('change'));
+}
+
+// Get-запрос на получение одной записи по id.
+async function getNote(event) {
+    if (event.target.value != "") {
+        var response = await fetch(`/Home/GetNote?id=${event.target.value}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        });
+
         if (response.ok === true) {
             var note = await response.json();
-    
+
             setValue(note);
         }
     }
-    else{
+    else {
         setValue(null);
     }
-
 }
 
 // Delete-запрос для удаления записки по id.
