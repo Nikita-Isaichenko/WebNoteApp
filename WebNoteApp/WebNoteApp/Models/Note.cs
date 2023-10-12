@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.ComponentModel.DataAnnotations;
+using WebNoteApp.Models.Enums;
 
 namespace WebNoteApp.Models
 {
@@ -7,6 +9,11 @@ namespace WebNoteApp.Models
     /// </summary>
     public class Note
     {
+        /// <summary>
+        /// Категория.
+        /// </summary>
+        private string _category;
+
         /// <summary>
         /// Id.
         /// </summary>
@@ -26,16 +33,31 @@ namespace WebNoteApp.Models
         /// <summary>
         /// Категория.
         /// </summary>
-        public string Category { get; set; }
+        public string Category
+        {
+            set => _category = value;
+
+            get
+            {
+                if (Enum.TryParse<NotesCategory>(_category, true, out _))
+                {
+                    return _category;
+                }
+                else
+                {
+                    return NotesCategory.Other.ToString();
+                }
+            }
+        }
 
         /// <summary>
         /// Дата создания.
         /// </summary>
-        public string Created { get; set; }
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// Дата изменения.
         /// </summary>
-        public string Modified { get; set; }    
+        public DateTime Modified { get; set; }    
     }
 }

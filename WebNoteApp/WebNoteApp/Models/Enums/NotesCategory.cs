@@ -1,11 +1,41 @@
 ﻿namespace WebNoteApp.Models.Enums
 {
-    public enum Category
+    /// <summary>
+    /// Хранит название категорий.
+    /// </summary>
+    public enum NotesCategory
     {
+        /// <summary>
+        /// Все.
+        /// </summary>
         All,
-        Personal,
+        /// <summary>
+        /// Работа.
+        /// </summary>
         Work,
-        Education,
+        /// <summary>
+        /// Дом.
+        /// </summary>
+        Home,
+        /// <summary>
+        /// Здоровье и спорт.
+        /// </summary>
+        HealtsAndSports,
+        /// <summary>
+        /// Люди.
+        /// </summary>
+        People,
+        /// <summary>
+        /// Документы.
+        /// </summary>
+        Documents,
+        /// <summary>
+        /// Финансы.
+        /// </summary>
+        Finance,
+        /// <summary>
+        /// Другое.
+        /// </summary>
         Other
     }
 }
