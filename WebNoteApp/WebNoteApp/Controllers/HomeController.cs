@@ -107,12 +107,12 @@ namespace WebNoteApp.Controllers
         [HttpPut]
         public IActionResult UpdateNote([FromBody] Note note)
         {
-            var modifiedNote = _crud.UpdateNote(note);
-/*
-            if (modifiedNote != null)
+            if (ModelState.IsValid)
             {
+                var modifiedNote = _crud.UpdateNote(note);
+
                 return Ok(modifiedNote);
-            }*/
+            }
 
             return BadRequest(new { message = "Ошибка изменения заметки." });
         }

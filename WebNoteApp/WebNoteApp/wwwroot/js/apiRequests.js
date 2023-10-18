@@ -163,7 +163,4 @@ async function saveEditedNote() {
             showModal(obj.message);
             console.log(obj.message);
         }
-        
-
-
 }

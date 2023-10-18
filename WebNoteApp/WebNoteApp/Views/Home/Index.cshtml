@@ -10,19 +10,20 @@
     <title>NoteApp</title>
 </head>
 
-<body style="height: 100%;" onload="getNotes();">
-
-    <header class="container w-25 mx-auto" style="height: 5%;">
-        LOGO
+<body class="bg-light bg-gradient" style="height: 100%;" onload="getNotes();">
+    <header class="bg-dark text-center text-lg-start">
+        <div class="text-center p-3 text-white" style="background-color: rgba(0, 0, 0, 0.2);">
+            <h3>NoteApp</h3>
+        </div>
     </header>
-    <main class="container border border-primary rounded h-auto">
+    <main class="container rounded h-auto">
         <div class="row h-auto">
             <div class="col-sm-4 h-auto">
                 <div class="container pb-3">
                     <div class="row pb-2">
                         <div class="col-md-12 mt-3">
                             <label for="category mb-3" class="form-label mb-1">
-                                Категории
+                                Categories:
                             </label>
                             <select class="form-control mb-3 category" id="category_filter">
                                 @for (int i = 0; i < ViewBag.NotesCategoryList.Length; i++)
@@ -31,7 +32,7 @@
                                 }
                             </select>
                             <label for="note" class="form-label mb-1">
-                                Заметки
+                                Notes:
                             </label>
                             <select class="form-control mb-3" id="notes_titles_selector" size="10" multiple>
                             </select>
@@ -74,7 +75,7 @@
                     <input type="text" class="form-control mt-3" id="schema" placeholder="Тема" readonly />
                     <span class="text-danger" id="errorMessage" hidden></span><br />
                     <label for="category my-3" class="form-label mb-1">
-                        Категория:
+                        Category:
                     </label>
                     <select class="form-control mb-3 category" id="category" disabled>
                         @for (int i = 1; i < ViewBag.NotesCategoryList.Length; i++)
@@ -84,11 +85,11 @@
                     </select>
                     <div class="row pb-2">
                         <div class="col-md mb-3">
-                            <label class="form-label mb-1" for="created">Created</label>
+                            <label class="form-label mb-1" for="created">Created:</label>
                             <input class="form-control" type="text" id="created" readonly>
                         </div>
                         <div class="col-md mb-3">
-                            <label class="form-label mb-1" for="modified">Modified</label>
+                            <label class="form-label mb-1" for="modified">Modified:</label>
                             <input class="form-control" type="text" id="modified" readonly>
                         </div>
                     </div>
@@ -98,14 +99,17 @@
             </div>
         </div>
     </main>
-    <footer class="footer w-25 mx-auto" style="height: 5%;">
-        footer
+    <footer class="bg-dark text-center text-lg-start">
+        <div class="text-center p-3 text-white" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 Copyright:
+            <a class="text-dark text-white" href="https://github.com/Nikita-Isaichenko">Nikita Isaichenko</a>
+        </div>
     </footer>
     <div class="modal" id="errorModal" tabindex="-1">
         <div class="modal-dialog dialog-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Внимание!</h5>
+                    <h5 class="modal-title">Attention!</h5>
                     <button type="button" class="btn-close" id="btnCloseModal" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
