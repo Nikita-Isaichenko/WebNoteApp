@@ -45,16 +45,19 @@ namespace WebNoteApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNote([FromBody] Note note)
         {
-            try
+            if (ModelState.IsValid)
             {
                 await _crud.CreateAsync(note);
 
-                return Ok(new { message = "Заметка создана." });
+                return Ok("Заметка создана");
             }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+
+            return BadRequest(
+                new 
+                {
+                    note,
+                    message = "Неверные значения для свойств объекта"
+                });          
         }
 
         /// <summary>
@@ -73,7 +76,7 @@ namespace WebNoteApp.Controllers
                 return Ok(note);
             }
 
-            return Json(new { message = "Запись не найдена." });
+            return NotFound(new { message = "Заметка не найдена." });
         }
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace WebNoteApp.Controllers
                 return Ok(notes);
             }
 
-            return Json(new { message = "Записи не найдены." });
+            return NotFound(new { message = $"Заметки категории {category} не найдены." });
         }
 
         /// <summary>
@@ -104,14 +107,14 @@ namespace WebNoteApp.Controllers
         [HttpPut]
         public IActionResult UpdateNote([FromBody] Note note)
         {
-            var modifiedNote = _crud.UpdateNote(note);
-
-            if (modifiedNote != null)
+            if (ModelState.IsValid)
             {
+                var modifiedNote = _crud.UpdateNote(note);
+
                 return Ok(modifiedNote);
             }
 
-            return Json(new { message = "Ошибка изменения." });
+            return BadRequest(new { message = "Ошибка изменения заметки." });
         }
 
         /// <summary>

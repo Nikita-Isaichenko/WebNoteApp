@@ -23,6 +23,7 @@ namespace WebNoteApp.Models
         /// <summary>
         /// Название.
         /// </summary>
+        [MaxLength(50)]
         public string Title { get; set; }
 
         /// <summary>

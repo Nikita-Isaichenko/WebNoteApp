@@ -15,6 +15,11 @@ document.getElementById("notes_titles_selector").addEventListener('change', getN
 document.getElementById("edit").addEventListener("click", editNote);
 document.getElementById("delete").addEventListener("click", deleteNote);
 document.getElementById("category_filter").addEventListener("change", getNotes);
+schema.addEventListener("input", checkValidSchema);
+document.getElementById("btnCloseModal").addEventListener("click", () => {
+    var modal = new bootstrap.Modal(document.getElementById('errorModal'));
+    modal.hide();
+})
 
 // Обрабатывает нажатие на кнопку Edit.
 function editNote() {
@@ -81,6 +86,7 @@ function reset() {
     textarea.setAttribute("readonly", true);
     schema.setAttribute("readonly", true);
     notesTitlesSelector.removeAttribute("disabled");
+    schema.dispatchEvent(new Event("input"));
 }
 
 // Очищает listbox с заголовками.
@@ -120,6 +126,13 @@ function setValue(note) {
         dateModified.value = "";
         noteId.value = "";
     }
+}
+
+// Устанавливает сообщения для модального окна и показывает его.
+function showModal(message){
+    var modal = new bootstrap.Modal(document.getElementById('errorModal'));
+    document.getElementById("modal_body_text").innerText = message;
+    modal.show();
 }
 
 
